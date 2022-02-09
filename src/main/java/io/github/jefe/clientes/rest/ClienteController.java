@@ -2,15 +2,18 @@ package io.github.jefe.clientes.rest;
 
 import io.github.jefe.clientes.model.entity.Cliente;
 import io.github.jefe.clientes.model.repository.ClienteRespository;
+import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/clientes")
+@CrossOrigin("http://localhost:4200")
 public class ClienteController {
 
     private ClienteRespository repository;
@@ -18,6 +21,11 @@ public class ClienteController {
     @Autowired
     public ClienteController(ClienteRespository repository){
         this.repository = repository;
+    }
+
+    @GetMapping
+    public List<Cliente> obterTodos(){
+        return repository.findAll();
     }
 
     @PostMapping
